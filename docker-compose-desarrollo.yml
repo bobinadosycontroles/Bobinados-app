@@ -1,0 +1,49 @@
+version: "3.7"
+services:
+  dev-bobinados-frontend:
+    build:
+      context: ./frontend-nuevo/
+      target: 'develop-stage'
+    image: dev-bobinados-frontend
+    container_name: dev-bobinados-frontend
+    command: sh -c 'npm install && quasar dev'
+    ports:
+      - 9000:9000
+    volumes:
+      - ./frontend-nuevo:/app
+    restart: "no"
+    depends_on:
+      - dev-bobinados-backend
+  dev-bobinados-backend:
+    build:
+      dockerfile: Dockerfile
+      context: backend/
+      args:
+        requirements: requirements/desarrollo.txt
+    image: dev-bobinados-backend
+    restart: "no"
+    container_name: dev-bobinados-backend
+    command: sh -c 'python /app/manage.py migrate && python /app/manage.py runserver
+      0.0.0.0:8000'
+    ports:
+      - 8000:8000
+    volumes:
+      - ./backend:/app
+    environment:
+      - DJANGO_SETTINGS_MODULE=config.settings.desarrollo
+    depends_on:
+      - dev-bobinados-db
+  dev-bobinados-db:
+    restart: "no"
+    image: postgres:alpine
+    container_name: dev-bobinados-db
+    ports:
+      - 5439:5432
+    environment:
+      - POSTGRES_USER=bobinados
+      - POSTGRES_PASSWORD=bobinados
+      - POSTGRES_DB=bobinados
+    volumes:
+      - bobinados_postgresql_data_desarrollo:/var/lib/postgresql/data
+volumes:
+  bobinados_postgresql_data_desarrollo:

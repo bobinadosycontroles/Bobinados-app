@@ -1,0 +1,112 @@
+// app global css in SCSS form
+
+// Color palette BOBINADOS
+$bobinados-primary: #003366;
+$bobinados-secondary: #C41E3A;
+$bobinados-accent: #D4AF37;
+$bobinados-accent-dark: #b08f2e;
+$bobinados-accent-gradient: linear-gradient(90deg, #D4AF37 0%, #C99A2E 100%);
+
+// Global theme colors
+:root {
+  --bobinados-primary: #{$bobinados-primary};
+  --bobinados-secondary: #{$bobinados-secondary};
+  --bobinados-accent: #{$bobinados-accent};
+}
+
+// Body and general styles
+body {
+  background-color: #f8f8f8;
+}
+
+// Page container
+.q-page {
+  background-color: #ffffff;
+}
+
+// Links
+a {
+  color: $bobinados-primary;
+  
+  &:hover {
+    color: $bobinados-secondary;
+  }
+}
+
+// Buttons
+.q-btn {
+  &.bg-primary,
+  &.text-primary {
+    &:hover {
+      background-color: darken($bobinados-primary, 5%);
+    }
+  }
+
+  /* Accent CTA style: use for important actions */
+  &.accent-btn,
+  &[color="accent"] {
+    background: $bobinados-accent-gradient;
+    color: #06202a;
+    border: 0;
+    box-shadow: 0 8px 20px rgba(201,154,46,0.18);
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+}
+
+// Cards
+.q-card {
+  border: 1px solid #e0e0e0;
+  border-top: 3px solid $bobinados-accent;
+}
+
+// Tables
+.q-table {
+  --q-table-row-height: 48px;
+  
+  thead tr {
+    background-color: $bobinados-primary;
+    
+    th {
+      color: white;
+      font-weight: 600;
+    }
+  }
+  
+  tbody tr:hover {
+    background-color: rgba($bobinados-primary, 0.05);
+  }
+}
+
+// Badges and chips
+.q-badge {
+  background-color: $bobinados-secondary;
+  color: #fff;
+}
+
+// Focus states
+.q-field__control,
+.q-input__control,
+.q-textarea__control {
+  &:focus-within {
+    border-color: $bobinados-primary !important;
+  }
+}
+
+/* Links and emphasis */
+a {
+  color: $bobinados-primary;
+
+  &:hover {
+    color: $bobinados-accent-dark;
+    text-decoration: underline;
+  }
+}
+
+/* Accent outlines */
+.accent-outline {
+  border: 1px solid $bobinados-accent;
+  box-shadow: 0 6px 18px rgba(212,175,55,0.12);
+}
