@@ -1,7 +1,7 @@
 from .base import *  # noqa: F403, F401
 
 DEBUG = False
-ALLOWED_HOSTS = ['64.227.110.12', 'app.bobinados.com']
+ALLOWED_HOSTS = ['67.205.133.106', 'app.bobinados.com']
 SITE_URL = 'http://app.bobinados.com/'
 
 
@@ -11,7 +11,7 @@ DATABASES = {
         'NAME': 'bobinados',
         'USER': 'bobinados',
         'PASSWORD': 'Bobinados2026!',
-        'HOST': '64.227.110.12',
+        'HOST': '67.205.133.106',
         'PORT': '5432',
     }
 }

@@ -27,10 +27,10 @@ DEBUG = False
 
 TEMPLATE_DEBUG = DEBUG
 
-ALLOWED_HOSTS = ['app.bobinados.com', '64.227.110.12']
+ALLOWED_HOSTS = ['app.bobinados.com', '67.205.133.106']
 
 CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = ['https://app.bobinados.com', 'http://64.227.110.12']
+CORS_ORIGIN_WHITELIST = ['https://app.bobinados.com', 'http://67.205.133.106']
 CORS_ALLOW_CREDENTIALS = True
 
 DJANGO_APPS = [
