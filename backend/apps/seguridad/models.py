@@ -74,22 +74,38 @@ class Usuario(AbstractUser, TimeStampedModel):
         self.enviar_datos_acceso(password)
 
     def enviar_datos_acceso(self, password):
-        asunto = 'Bobinados y controles - Datos de acceso'
+        asunto = 'Datos de acceso - Bobinados y Controles'
         datos = {
-            'nombre_completo': self.get_full_name(),
+            'nombre_completo': self.get_full_name() or self.username,
             'username': self.username,
             'contraseña': password,
-            'site_url': settings.SITE_URL
+            'site_url': settings.SITE_URL.rstrip('/')
         }
 
         mensaje = render_to_string('emails/generar_contrasena.html', {'datos': datos})
-        self.enviar_mail(asunto, mensaje)
+        texto = (
+            'Hola {nombre},\n\n'
+            'Se creó tu cuenta en el sistema de Bobinados y Controles.\n\n'
+            'Usuario: {usuario}\n'
+            'Contraseña temporal: {clave}\n\n'
+            'Puedes ingresar desde: {url}\n\n'
+            'Te recomendamos cambiar la contraseña después de ingresar.\n\n'
+            'Este es un mensaje automático, por favor no responda a este correo.'
+        ).format(
+            nombre=datos['nombre_completo'],
+            usuario=datos['username'],
+            clave=password,
+            url=datos['site_url'],
+        )
+        self.enviar_mail(asunto, mensaje, texto)
 
-    def enviar_mail(self, asunto, mensaje):
+    def enviar_mail(self, asunto, mensaje, texto=None):
+        texto_plano = texto or strip_tags(mensaje)
+
         def _send():
             try:
-                send_mail(asunto, mensaje, settings.DEFAULT_FROM_EMAIL, [self.email], html_message=mensaje,
-                          fail_silently=False)
+                send_mail(asunto, texto_plano, settings.DEFAULT_FROM_EMAIL, [self.email],
+                          html_message=mensaje, fail_silently=False)
                 logger.info('Email enviado a %s', self.email)
             except Exception as e:
                 logger.error('Error enviando email a %s: %s', self.email, str(e), exc_info=True)
